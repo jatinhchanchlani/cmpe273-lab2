@@ -42,10 +42,19 @@ Login.prototype.login = function(_name, _email) {
  */ 
 Login.prototype.logout = function(sessionId) {
 	console.log('logout::' + sessionId);
+	delete this.sessionMap[sessionId];
    /*
 	* TODO: Remove the given sessionId from the sessionMap
 	*/
 };
-
+Login.prototype.refresh = function(session_id)
+{
+	var _name = this.sessionMap[session_id].name;
+	var _email = this.sessionMap[session_id].email;
+	var newsessionId = new Date().getTime();
+	delete this.sessionMap[session_id];
+	this.sessionMap[newsessionId]= { name: _name, email: _email }
+	return newsessionId;
+};
 // Export the Login class
 module.exports = new Login();
